@@ -1,41 +1,74 @@
 """E-Learning System"""
 
-class Person:
-    def __init__(self,name,email):
-        self.name = name
-        self.email = email
 
-    def display_details(self):
-        print(f"The student name is :  {self.name} and its email id is : {self.email}")
-
-class Student(Person):
+class Student:
     def __init__(self,student_id,course,name,email):
-        self.stu_id = student_id
-        self.course = course
-        super().__init__(name,email)
-
-    def enroll_course(self):
-        self.display_details()
-        print(f"The student id is : {self.stu_id} and currently studying the {self.course} course")
+        self.stu_id = input("Enter student Roll No. : = ")
+        while True:
+            if self.stu_id.isdigit():
+                break
+            else:
+                print("Enter Correct Roll No.")
+                self.stu_id = input("Enter student Roll No. : = ")
+        self.name = input("Enter name : =")
+        self.email = input("Enter email : = ")
+        self.gmail = "@gmail.com"
+        while True:
+            if self.gmail in self.email:
+                break
+            else:
+                print("please enter Valid Email ID : ")
+                self.email = input("Enter email : = ")
+        self.course = input("Enter Course : = ")
 
 class PremiumStudent(Student):
-    l1 = []
-    def __init__(self,membership_level,student_id,course,name,email):
-        self.mem_level = membership_level
+    student_list = {}
+    def __init__(self,student_id,name,email,course,membership_level):
         super().__init__(student_id,course,name,email)
+        print("1 : Beginner \n2 : Average \n3 : VIP")
+        self.mem_level = int(input("Enter membership level : = "))#membership_level
+        while True:
+            if self.mem_level == 1 or self.mem_level == 2 or self.mem_level == 3:
+                break
+            else:
+                print("Enter Correct Membership Level")
+                print("1 : Beginner \n2 : Average \n3 : VIP")
+                self.mem_level = int(input("Enter membership level : = "))
 
     def display_premium_details(self):
-        print(f"The student name is :  {self.name} and its email id is : {self.email}")
-        print(f"The student id is : {self.stu_id} and currently studying the {self.course} course")
-        print(f"The student premium level is : {self.mem_level}")
-        dict1 = {}
-        dict1 [self.stu_id] = self.name,self.email,self.course,self.mem_level
-        for k,v in dict1.items():
-            print(f"{k} = {v}")
-        PremiumStudent.l1.append(list(dict1))
-        print(PremiumStudent.l1)
+        print(f"{self.stu_id} | {self.name} | {self.email} | {self.course} | {self.mem_level}")
+
+        self.student_list[self.stu_id] = (self.name,self.email,self.course,self.mem_level)
+    @classmethod
+    def print_students_list(cls):
+        for key, value in PremiumStudent.student_list.items():
+            print(f'{key}: {value}')
 
 
 
-p1 = PremiumStudent("3",123,"Python","Abhi","abhi@123.com")
-p1.display_premium_details()
+# p1 = PremiumStudent(000,"Name","Email_ID","Course",000)
+# p1.display_premium_details()
+# p1.print_students_list()
+print("---------------------------E-learning Student Data---------------------------")
+print("No data Available")
+PremiumStudent.print_students_list()
+n = 1
+while n !=0:
+    dict1 = {1: "New Student",2 : "Student List",0: "Exit"}
+    for k, v in dict1.items():
+        print(f"{k} = {v}")
+    n = int(input("Enter choice : "))
+
+    if n == 1:
+        p1 = PremiumStudent(000,"Name","Email_ID","Course",000)
+        p1.display_premium_details()
+    elif n == 2:
+        PremiumStudent.print_students_list()
+    elif n == 0:
+        PremiumStudent.print_students_list()
+        print("EXIT")
+    else:
+        print("INVALID INPUT !!\n-------------------Enter Again-------------------")
+        pass
+
+
